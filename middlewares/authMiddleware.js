@@ -7,8 +7,8 @@ const authenticateJWT = (req, res, next) => {
 
     if (authHeader) {
         // The token is usually in the format "Bearer <token>"
-        const token = authHeader.split(' ')[1];
-
+        // const token = authHeader.split(' ')[1];
+        const token = authHeader;
         // Verify the token using the secret key
         jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
             if (err) {
@@ -33,4 +33,14 @@ const adminOnly = (req, res, next) => {
     }
 };
 
-module.exports = { authenticateJWT, adminOnly };
+// Admin role authorization middleware (to ensure user is admin)
+const masterOnly = (req, res, next) => {
+    console.log(req.user);
+    if (req.user && req.user.role === 'master') {
+        next();  // Proceed if user is admin
+    } else {
+        res.status(403).json({ message: 'Access forbidden: masters only' });
+    }
+};
+
+module.exports = { authenticateJWT, adminOnly, masterOnly };

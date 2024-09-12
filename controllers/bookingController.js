@@ -22,7 +22,7 @@ exports.bookSeminarHall = async (req, res) => {
         await booking.save();
         res.status(201).json(booking);
     } catch (err) {
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error', err });
     }
 };
 
@@ -34,6 +34,6 @@ exports.getStudentBookings = async (req, res) => {
         const bookings = await Booking.find({ studentId }).populate('seminarHallId');
         res.status(200).json(bookings);
     } catch (err) {
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error', err });
     }
 };

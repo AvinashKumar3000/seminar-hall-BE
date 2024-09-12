@@ -9,7 +9,7 @@ exports.addCollege = async (req, res) => {
         await college.save();
         res.status(201).json(college);
     } catch (err) {
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error', err });
     }
 };
 
@@ -19,6 +19,6 @@ exports.getColleges = async (req, res) => {
         const colleges = await College.find().populate('admins').populate('seminarHalls');
         res.status(200).json(colleges);
     } catch (err) {
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error', err });
     }
 };

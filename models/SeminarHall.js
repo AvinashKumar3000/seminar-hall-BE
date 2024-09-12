@@ -5,7 +5,6 @@ const seminarHallSchema = new mongoose.Schema({
     collegeId: { type: mongoose.Schema.Types.ObjectId, ref: 'College', required: true },
     capacity: { type: Number, required: true },
     amenities: [{ type: String }],
-    pricePerHour: { type: Number, required: true },
     availability: [
         {
             date: { type: Date },

@@ -6,8 +6,8 @@ const generateToken = (user) => {
     return jwt.sign(
         {
             id: user._id,
-            role: user.role,
-            collegeId: user.collegeId || null
+            email: user.email,
+            role: user.role
         },
         process.env.JWT_SECRET,
         { expiresIn: '1h' }
@@ -16,7 +16,7 @@ const generateToken = (user) => {
 
 // Signup User
 exports.signup = async (req, res) => {
-    const { name, email, password, role, collegeId } = req.body;
+    const { name, email, reg_id, contacts, password, collegeId, role } = req.body;
 
     try {
         const existingUser = await User.findOne({ email });
@@ -24,13 +24,13 @@ exports.signup = async (req, res) => {
             return res.status(400).json({ message: 'User already exists' });
         }
 
-        const user = new User({ name, email, password, role, collegeId });
+        const user = new User({ name, email, reg_id, contacts, password, collegeId, role });
         await user.save();
 
         const token = generateToken(user);
         res.status(201).json({ token });
     } catch (err) {
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error', err });
     }
 };
 
@@ -45,8 +45,8 @@ exports.login = async (req, res) => {
         }
 
         const token = generateToken(user);
-        res.status(200).json({ token });
+        res.status(200).json({ token, user });
     } catch (err) {
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error', err });
     }
 };

@@ -4,10 +4,12 @@ const bcrypt = require('bcryptjs');
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
+    reg_id: { type: String, required: true, unique: true },
+    contacts: { type: [{ type: String }], required: true },
     password: { type: String, required: true },
-    role: { type: String, enum: ['admin', 'student'], required: true },
-    collegeId: { type: mongoose.Schema.Types.ObjectId, ref: 'College' }, // For admins
-    bookings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Booking' }]  // For students
+    role: { type: String, enum: ['admin', 'student', 'master'], required: true },
+    collegeId: { type: String, ref: 'College' },
+    bookings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Booking' }] // For students
 });
 
 // Password hashing middleware

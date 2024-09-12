@@ -165,3 +165,8 @@ dist-ssr
 
 - View/manage bookings and halls for the college they are associated with.
 - Approve/reject/cancel student bookings.
+
+
+---
+
+![image](https://github.com/user-attachments/assets/e1f39c3e-f254-4562-9ac7-eac3cbb5b83e)
